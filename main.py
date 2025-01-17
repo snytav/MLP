@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib
 import torch
+from sklearn.model_selection import train_test_split
 
 def lossf(pred, target):
     squares = (pred - target) ** 2
@@ -30,8 +31,12 @@ plt.title('noisy sine')
 plt.show(block=True)
 x_train.unsqueeze_(1)
 y_train.unsqueeze_(1)
-x_validation = torch.linspace(-10,10,100)
-y_validation = torch.sin(x_validation)
+
+x_train, x_validation, y_train, y_validation = train_test_split(
+    x_train, y_train, test_size=0.2, random_state=42)
+
+# x_validation = torch.linspace(-10,10,100)
+# y_validation = torch.sin(x_validation)
 plt.figure(4)
 plt.plot(x_validation.numpy(),y_validation.numpy(),'o')
 plt.title('sin(x)')
